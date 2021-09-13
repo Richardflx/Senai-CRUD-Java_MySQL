@@ -2,19 +2,21 @@
 package estoque.telas;
 
 import estoque.dao.ClienteDAO;
+import estoque.dao.ProdutoDAO;
 import estoque.model.Cliente;
+import estoque.model.Produto;
 import java.util.List;
 
 /**
  *
  * @author richard
  */
-public class ListarClientes extends javax.swing.JFrame {
+public class ListarClientesProdutos extends javax.swing.JFrame {
 
     /**
      * Creates new form ListarClientes
      */
-    public ListarClientes() {
+    public ListarClientesProdutos() {
         initComponents();
     }
 
@@ -31,8 +33,18 @@ public class ListarClientes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtResultadoClientes = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Estoque+ - Listar Clientes e Produtos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         btnListarClientes.setText("Listar Clientes");
         btnListarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -46,6 +58,18 @@ public class ListarClientes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtResultadoClientes);
 
         jButton1.setText("Listar Produtos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -57,8 +81,10 @@ public class ListarClientes extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnListarClientes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnVoltar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -67,7 +93,8 @@ public class ListarClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnListarClientes)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(btnVoltar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
@@ -81,9 +108,30 @@ public class ListarClientes extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClienteDAO clienteDAO = new ClienteDAO();
         List<Cliente> lista = clienteDAO.listar();
+        txtResultadoClientes.setText("");
         for (Cliente cliente : lista)
              txtResultadoClientes.append(cliente+"\n\n");
     }//GEN-LAST:event_btnListarClientesMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
+        telaPrincipal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        List<Produto> lista = produtoDAO.listar();
+        txtResultadoClientes.setText("");
+        for (Produto cliente : lista)
+             txtResultadoClientes.append(cliente+"\n\n");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,26 +150,28 @@ public class ListarClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarClientesProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarClientesProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarClientesProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListarClientesProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListarClientes().setVisible(true);
+                new ListarClientesProdutos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListarClientes;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtResultadoClientes;

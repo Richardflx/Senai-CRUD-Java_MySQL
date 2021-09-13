@@ -35,5 +35,6 @@ public class MainUpdate {
         Cliente cliente = new Cliente(id2,nome,endereco,telefone,email);
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.alterar(cliente);
+        
     }
 }

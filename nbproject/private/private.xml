@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/aplicacao/MainSelect.java</file>
-            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/dao/ClienteDAO.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/telas/EditarProduto.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/dao/ProdutoDAO.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/telas/TelaPrincipal.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/model/Produto.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/telas/TelaLogin.java</file>
+            <file>file:/home/richard/Projects/java/netbeans/GrupoQuatroSenai/src/estoque/telas/ListarClientesProdutos.java</file>
         </group>
     </open-files>
 </project-private>

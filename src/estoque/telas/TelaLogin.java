@@ -1,33 +1,56 @@
-
 package estoque.telas;
+
 package jdbc.exemplos.java;
 
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import estoque.dao.ClienteDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author richard
  */
 public class TelaLogin extends javax.swing.JFrame {
-
-Connection connection = null;
-PreparedStatement pst = null;
-ResultSet rs = null;
-
+    
+    Connection connection = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    public void logar() {
+        String sql = "select * from tbusuarios where login=? and senha=?";
+        try {
+            // prepara a consulta com os dados digitados de usuario e senha
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, txtUsuario.getText());
+            pst.setString(2, txtSenha.getText());
+            // executa a query para consultar o banco de dados
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                TelaPrincipal telaPrincipal = new TelaPrincipal();
+                telaPrincipal.setVisible(true);
+                this.dispose();
+                connection.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     public TelaLogin() {
         
         initComponents();
         try {
-            String driver = "com.mysql.cj.jdbc.Driver";
             String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/estoque_plus";
             String usuario = "root";
             String senha = "root";
             this.connection = DriverManager.getConnection(DATABASE_URL, usuario, senha);
         } catch (SQLException ex) {
-            System.out.println("MERDA");
+            System.out.println("Erro!");
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -49,26 +72,31 @@ ResultSet rs = null;
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtUser = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login Estoque+");
+        setTitle("Estoque+ - Login");
         setResizable(false);
 
         jLabel1.setText("Usuário:");
 
         jLabel2.setText("Senha:");
 
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         lblStatus.setText("Status DB");
 
@@ -81,7 +109,7 @@ ResultSet rs = null;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblStatus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
                         .addComponent(btnLogin))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,8 +117,8 @@ ResultSet rs = null;
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUser)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                            .addComponent(txtSenha))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -99,11 +127,11 @@ ResultSet rs = null;
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLogin)
@@ -115,9 +143,13 @@ ResultSet rs = null;
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        logar();
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,7 +192,7 @@ ResultSet rs = null;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtUser;
+    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
